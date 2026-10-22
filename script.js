@@ -51,6 +51,58 @@ const posteBU2=document.querySelector(" .col81");
 posteBU2.textContent="BU";
 posteBU2.style.color="red"
 
+const btnAjouter = document.querySelector("#btn-ajouter");
+const modal = document.querySelector("#modal-joueur");
+const form = document.querySelector("#form-joueur");
+const banc = document.querySelector("#banc");
+const btnAnnuler = document.querySelector("#btn-annuler");
+
+let joueurs=[];
+
+btnAjouter.addEventListener("click", function () {
+    modal.style.display = "block";
+});
+
+btnAnnuler.addEventListener("click", function () {
+    modal.style.display = "none";
+});
+
+
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const nom = document.querySelector("#nom").value.trim();
+    const poste = document.querySelector("#poste").value;
+    const numero = Number(document.querySelector("#numero").value);
+
+    if (!nom || !poste || numero < 1 || numero > 99) {
+        alert("Veuillez remplir correctement tous les champs.");
+        return;
+    }
+
+    const joueur = {
+        nom: nom,
+        poste: poste,
+        numero: numero
+    };
+
+    joueurs.push(joueur);
+
+    const carte = document.createElement("div");
+    carte.classList.add("joueur");
+
+    const nomJoueur = document.createElement("h3");
+    nomJoueur.textContent = joueur.nom;
+
+    const infoJoueur = document.createElement("p");
+    infoJoueur.textContent = `${joueur.poste} - N° ${joueur.numero}`;
+
+    carte.append(nomJoueur, infoJoueur);
+    banc.appendChild(carte);
+
+    form.reset();
+    modal.style.display = "none";
+});
 
 
 

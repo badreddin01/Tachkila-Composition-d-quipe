@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,60 +10,78 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
     <header class="bg-green-900 text-white p-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold"><span><img src="img/football.png" alt="football" height="30px" width="30px" ></span>Tachkila</h1>
+        <h1 class="text-2xl font-bold"><span><img src="img/football.png" alt="football" height="30px"
+                    width="30px"></span>Tachkila</h1>
         <div>
-        <span >🟨GB</span>
-        <span>🟦DEF</span>
-        <span>🟩MIL</span>
-        <span>🟥ATT</span>
-        
+            <span>🟨GB</span>
+            <span>🟦DEF</span>
+            <span>🟩MIL</span>
+            <span>🟥ATT</span>
+
         </div>
-        <div class="inline-grid grid-cols-3 gap-4" >
+        <div class="inline-grid grid-cols-3 gap-4">
             <p>Formation</p>
             <p>4 - 4 - 2</p>
         </div>
     </header>
 
     <div class="flex min-h-screen">
-<aside class="w-64 bg-slate-900 text-white p-4" >
-        <button id="btn-add-player" type="button" class = " bg-sky-600 hover:bg-sky-700 p-4 rounded-lg">
-        + Ajouter un joueur
-    </button>
+        <aside class="w-64 bg-slate-900 text-white p-4">
 
-    <form action="">
-        <div>
-        <label for="name">nom complet</label>
-        <input type="text" id="name" required placeholder="nom complet">
-        </div>
-        <div>
-            <label for="poste&numéro">poste</label>
-        </div>
-    </form>
-    <div class="sidebar-header">
-        <h2>Effectif</h2>
-        <span id="players-count">0 joueur</span>
+            <!-- modal -->
+            <button id="btn-ajouter" class=" bg-sky-600 hover:bg-sky-700 p-4 rounded-lg">Ajouter un joueur</button>
+            <div id="modal-joueur" class="modal">
+                <form id="form-joueur">
+                    <h2>Ajouter un joueur</h2>
+                    <label for="nom">Nom complet</label>
+                    <input type="text" id="nom" required>
+                    <label for="poste">Poste</label>
+                    <select id="poste" required>
+                        <option value="">Choisir un poste</option>
+                            <option value="GB">Gardien</option>
+                            <option value="DC">Défenseur central</option>
+                            <option value="DG">Défenseur gauche</option>
+                            <option value="DD">Défenseur droit</option>
+                            <option value="MC">Milieu central</option>
+                            <option value="BU">Attaquant</option>
+                     </select>
+                            <label for="numero">numero</label>
+                            <input type="number" id="numero" min="1" max="99" required>
+                            <button type="submit">Ajouter</button>
+                            <button type="button" id="btn-annuler">Annuler</button>
+
+                </form>
+            </div>
+        <section>
+                <h2>Banc des remplaçants</h2>
+            <div id="banc"></div>
+        </section>
+
+            <div class="sidebar-header">
+                <h2>Effectif</h2>
+                <span id="players-count">0 joueur</span>
+            </div>
+
+            <div id="players-list">
+                <p class="empty-message">
+                    Aucun joueur pour le moment.
+                </p>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-4">
+
+            <div id="container"></div>
+
+
+        </main>
     </div>
 
 
 
-    <div id="players-list">
-        <p class="empty-message">
-            Aucun joueur pour le moment.
-        </p>
-    </div>
-</aside>
-
-<main class="flex-1 p-4">
-
-        <div id="container"></div>
-    
-
-</main>
-    </div>
-    
-
-    
 </body>
+
 </html>
