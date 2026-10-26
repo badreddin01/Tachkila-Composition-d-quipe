@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -34,26 +34,39 @@
             <!-- modal -->
             <button id="btn-ajouter" class=" bg-sky-600 hover:bg-sky-700 p-4 rounded-lg">Ajouter un joueur</button>
             <div id="modal-joueur" class="modal">
-                <form id="form-joueur">
-                    <h2>Ajouter un joueur</h2>
-                    <label for="nom">Nom complet</label>
-                    <input type="text" id="nom" required>
-                    <label for="poste">Poste</label>
-                    <select id="poste" required>
-                        <option value="">Choisir un poste</option>
-                            <option value="GB">Gardien</option>
-                            <option value="DC">Défenseur central</option>
-                            <option value="DG">Défenseur gauche</option>
-                            <option value="DD">Défenseur droit</option>
-                            <option value="MC">Milieu central</option>
-                            <option value="BU">Attaquant</option>
-                     </select>
-                            <label for="numero">numero</label>
-                            <input type="number" id="numero" min="1" max="99" required>
-                            <button type="submit">Ajouter</button>
-                            <button type="button" id="btn-annuler">Annuler</button>
+                <button type="button" id="btn-fermer">×</button>
 
-                </form>
+<form id="form-joueur" novalidate>
+
+    <h2>Ajouter un joueur</h2>
+
+    <!-- Nom -->
+    <label for="nom">Nom complet</label>
+    <input type="text" id="nom" required aria-describedby="erreur-nom">
+    <p id="erreur-nom" class="erreur"></p>
+
+    <!-- Poste -->
+    <label for="poste">Poste</label>
+    <select id="poste" required aria-describedby="erreur-poste">
+        <option value="">Choisir un poste</option>
+        <option value="GB">Gardien</option>
+        <option value="DC">Défenseur central</option>
+        <option value="DG">Défenseur gauche</option>
+        <option value="DD">Défenseur droit</option>
+        <option value="MC">Milieu central</option>
+        <option value="BU">Attaquant</option>
+    </select>
+    <p id="erreur-poste" class="erreur"></p>
+
+    <!-- Numéro -->
+    <label for="numero">Numéro</label>
+    <input type="number" id="numero" min="1" max="99" step="1" required aria-describedby="erreur-numero">
+    <p id="erreur-numero" class="erreur"></p>
+
+    <button type="submit">Ajouter</button>
+    <button type="button" id="btn-annuler">Annuler</button>
+
+</form>
             </div>
         <section>
                 <h2>Banc des remplaçants</h2>

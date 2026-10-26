@@ -56,29 +56,149 @@ const modal = document.querySelector("#modal-joueur");
 const form = document.querySelector("#form-joueur");
 const banc = document.querySelector("#banc");
 const btnAnnuler = document.querySelector("#btn-annuler");
+const btnFermer = document.querySelector("#btn-fermer")
+const champNom = document.querySelector("#nom");
+const champPoste = document.querySelector("#poste");
+const champNumero = document.querySelector("#numero");
+const erreurNom = document.querySelector("#erreur-nom");
+const erreurPoste = document.querySelector("#erreur-poste");
+const erreurNumero = document.querySelector("#erreur-numero");
 
-let joueurs=[];
+let joueurs = [];
+
+if (localStorage.getItem("joueurs")) {
+    joueurs = JSON.parse(localStorage.getItem("joueurs"));
+}
 
 btnAjouter.addEventListener("click", function () {
     modal.style.display = "block";
 });
 
-btnAnnuler.addEventListener("click", function () {
-    modal.style.display = "none";
+    // fermeture de modal
+function fermerModal () {
+    modal.style.display="none"
+}
+
+btnAnnuler.addEventListener("click",fermerModal)
+btnFermer.addEventListener("click",fermerModal)
+
+document.addEventListener("keydown",function(event){
+    if(event.key==="escape") {
+        fermerModal();
+    }
+})
+
+modal.addEventListener("click", function (event) {
+    if (event.target === modal) {
+        fermerModal();
+    }
 });
 
+
+
+function afficherJoueurs() {
+    banc.innerHTML = "";
+
+    joueurs.forEach(function (joueur) {
+        const carte = document.createElement("div");
+        carte.classList.add("joueur");
+
+        const numero = document.createElement("span");
+        numero.textContent = joueur.numero;
+
+        const nom = document.createElement("h3");
+        nom.textContent = joueur.nom;
+
+        const poste = document.createElement("p");
+        poste.textContent = joueur.poste;
+
+        if (joueur.poste === "GB") {
+            poste.style.color = "yellow";
+        } else if (
+            joueur.poste === "DG" ||
+            joueur.poste === "DC" ||
+            joueur.poste === "DD"
+        ) {
+            poste.style.color = "blue";
+        } else if (
+            joueur.poste === "MG" ||
+            joueur.poste === "MC" ||
+            joueur.poste === "MD"
+        ) {
+            poste.style.color = "green";
+        } else if (
+            joueur.poste === "BU"
+        ) {
+            poste.style.color = "red";
+        }
+
+        carte.append(numero, nom, poste);
+        banc.appendChild(carte);
+    });
+}
+
+
+afficherJoueurs();
+
+function validerNom() {
+    const nom = champNom.value.trim();
+    const nomValide = /^[\p{L}][\p{L} '-]{1,28}[\p{L}]$/u.test(nom);
+
+
+if (nom === "") {
+    erreurNom.textContent = "Le nom est obligatoire.";
+} else if (!nomValide) {
+    erreurNom.textContent = "Le nom doit contenir 3 à 30 caractères.";
+} else {
+    erreurNom.textContent = "";
+}
+
+champNom.setAttribute("aria-invalid", !nomValide);
+return nomValide;
+
+}
+
+function validerPoste() {
+    const posteValide = champPoste.value !== "";
+
+    erreurPoste.textContent = posteValide ? "" : "Le poste est obligatoire.";
+    champPoste.setAttribute("aria-invalid", String(!posteValide));
+    return posteValide;
+}
+
+function validerNumero() {
+    const valeur = champNumero.value;
+    const numeroValide = /^(?:[1-9]|[1-9]\d)$/.test(valeur);
+    const numeroDejaUtilise = numeroValide
+        && joueurs.some(joueur => Number(joueur.numero) === Number(valeur));
+
+    erreurNumero.textContent = !valeur
+        ? "Le numéro est obligatoire."
+        : (!numeroValide
+            ? "Le numéro doit être un entier compris entre 1 et 99."
+            : (numeroDejaUtilise ? "Ce numéro est déjà attribué." : ""));
+    champNumero.setAttribute("aria-invalid", String(!numeroValide || numeroDejaUtilise));
+    return numeroValide && !numeroDejaUtilise;
+}
+
+champNom.addEventListener("input", validerNom);
+champPoste.addEventListener("change", validerPoste);
+champNumero.addEventListener("input", validerNumero);
 
 form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const nom = document.querySelector("#nom").value.trim();
-    const poste = document.querySelector("#poste").value;
-    const numero = Number(document.querySelector("#numero").value);
-
-    if (!nom || !poste || numero < 1 || numero > 99) {
-        alert("Veuillez remplir correctement tous les champs.");
+    const nomValide = validerNom();
+    const posteValide = validerPoste();
+    const numeroValide = validerNumero();
+    const formulaireValide = nomValide && posteValide && numeroValide;
+    if (!formulaireValide) {
         return;
     }
+
+    const nom = champNom.value.trim();
+    const poste = champPoste.value;
+    const numero = Number(champNumero.value);
 
     const joueur = {
         nom: nom,
@@ -88,28 +208,12 @@ form.addEventListener("submit", function (event) {
 
     joueurs.push(joueur);
 
-    const carte = document.createElement("div");
-    carte.classList.add("joueur");
+    localStorage.setItem("joueurs", JSON.stringify(joueurs));
 
-    const nomJoueur = document.createElement("h3");
-    nomJoueur.textContent = joueur.nom;
-
-    const infoJoueur = document.createElement("p");
-    infoJoueur.textContent = `${joueur.poste} - N° ${joueur.numero}`;
-
-    carte.append(nomJoueur, infoJoueur);
-    banc.appendChild(carte);
+    afficherJoueurs();
 
     form.reset();
+    [champNom, champPoste, champNumero].forEach(champ => champ.removeAttribute("aria-invalid"));
+    [erreurNom, erreurPoste, erreurNumero].forEach(erreur => erreur.textContent = "");
     modal.style.display = "none";
 });
-
-
-
-
-
-
-
-
-
-
