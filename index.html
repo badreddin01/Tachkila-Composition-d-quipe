@@ -12,6 +12,7 @@
 </head>
 
 <body>
+<div id="message" class="hidden p-2.5 my-2.5 rounded"></div>
     <header class="bg-green-900 text-white p-4 flex justify-between items-center">
         <h1 class="text-2xl font-bold"><span><img src="img/football.png" alt="football" height="30px"
                     width="30px"></span>Tachkila</h1>
@@ -28,43 +29,67 @@
         </div>
     </header>
 
-    <div class="flex min-h-screen">
-        <aside class="w-64 bg-slate-900 text-white p-4">
-
+<div class="flex flex-col lg:flex-row min-h-screen w-full">
+<aside class="w-full lg:w-64 bg-slate-900 text-white p-4">
             <!-- modal -->
             <button id="btn-ajouter" class=" bg-sky-600 hover:bg-sky-700 p-4 rounded-lg">Ajouter un joueur</button>
-            <div id="modal-joueur" class="modal">
-                <button type="button" id="btn-fermer">×</button>
+            <div id="modal-joueur" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+<button type="button" id="btn-fermer" class="absolute right-6 top-6 text-3xl text-white hover:text-red-300">
+    ×
+</button>
 
-<form id="form-joueur" novalidate>
 
-    <h2>Ajouter un joueur</h2>
+<form id="form-joueur" class="flex w-full max-w-md flex-col gap-3 rounded-2xl border border-gray-200 bg-gray-50 p-6 shadow-2xl" novalidate>
 
-    <!-- Nom -->
-    <label for="nom">Nom complet</label>
-    <input type="text" id="nom" required aria-describedby="erreur-nom">
-    <p id="erreur-nom" class="erreur"></p>
+<h2 class="text-center text-2xl font-bold text-green-900 mb-2">
+    Ajouter un joueur
+</h2>
 
-    <!-- Poste -->
-    <label for="poste">Poste</label>
-    <select id="poste" required aria-describedby="erreur-poste">
-        <option value="">Choisir un poste</option>
-        <option value="GB">Gardien</option>
-        <option value="DC">Défenseur central</option>
-        <option value="DG">Défenseur gauche</option>
-        <option value="DD">Défenseur droit</option>
-        <option value="MC">Milieu central</option>
-        <option value="BU">Attaquant</option>
-    </select>
-    <p id="erreur-poste" class="erreur"></p>
+<label for="nom" class="text-sm font-semibold text-gray-700">
+    Nom complet
+</label>
+<input type="text" id="nom" required
+       class="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 outline-none focus:border-green-700 focus:ring-2 focus:ring-green-100"
+       aria-describedby="erreur-nom">
+       <p id="erreur-nom" class="erreur"></p>
 
-    <!-- Numéro -->
-    <label for="numero">Numéro</label>
-    <input type="number" id="numero" min="1" max="99" step="1" required aria-describedby="erreur-numero">
+<label for="poste" class="text-sm font-semibold text-gray-700">
+    Poste
+</label>
+<select id="poste" required
+        class="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 outline-none focus:border-green-700 focus:ring-2 focus:ring-green-100"
+        aria-describedby="erreur-poste">
+
+    <option value="">Choisir un poste</option>
+    <option value="GB">Gardien</option>
+    <option value="DC">Défenseur central</option>
+    <option value="DG">Défenseur gauche</option>
+    <option value="DD">Défenseur droit</option>
+    <option value="MC">Milieu central</option>
+    <option value="BU">Attaquant</option>
+
+</select>
+<p id="erreur-poste" class="erreur"></p>
+
+<label for="numero" class="text-sm font-semibold text-gray-700">
+    Numéro
+</label>
+<input type="number" id="numero" min="1" max="99" step="1" required
+       class="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 outline-none focus:border-green-700 focus:ring-2 focus:ring-green-100"
+       aria-describedby="erreur-numero">
+
     <p id="erreur-numero" class="erreur"></p>
 
-    <button type="submit">Ajouter</button>
-    <button type="button" id="btn-annuler">Annuler</button>
+<button type="submit"
+        class="w-full rounded-lg bg-green-800 px-4 py-3 font-bold text-white transition hover:bg-green-900">
+    Ajouter
+</button>
+
+<button type="button" id="btn-annuler"
+        class="w-full rounded-lg bg-gray-200 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-300">
+    Annuler
+</button>
+
 
 </form>
             </div>
@@ -84,13 +109,13 @@
                 </p>
             </div>
         </aside>
-
-        <main class="flex-1 p-4">
-
-            <div id="container"></div>
-
-
-        </main>
+    <main class="flex-1 min-w-0 p-4">
+        <div class="w-full overflow-x-auto">
+            <div id="container"
+                 class="min-w-[700px] min-h-[600px] grid grid-cols-12 grid-rows-9 gap-2 rounded-3xl bg-cover bg-center">
+            </div>
+        </div>
+    </main>
     </div>
 
 
